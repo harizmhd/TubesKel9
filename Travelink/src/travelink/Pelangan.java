@@ -9,10 +9,11 @@ package travelink;
  *
  * @author TOSHIBA
  */
-public class Pelangan {
+public class Pelangan extends Orang {
     private long idKTP;
 
     public Pelangan(long idKTP) {
+        super(nama,noKtp,jenisKelamin,alamat,email,noTelp);
         this.idKTP = idKTP;
     }
     public long getIdKTP() {
