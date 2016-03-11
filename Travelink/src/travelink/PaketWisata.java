@@ -6,7 +6,6 @@ public class PaketWisata {
     private String namaPaket;
     private float hargaPaket;
     private int jmlTempatWisata = 0;
-    private String hapusVariabelIni;
     
     public PaketWisata(long idPaket, String namaPaket, float hargaPaket) {
         this.idPaket = idPaket;
