@@ -13,7 +13,7 @@ public class Perjalanan {
     public Perjalanan(long idPerjalanan){
         this.idPerjalanan=idPerjalanan;
         pelanggan=new Pelanggan[100];
-        maxPelanggan = 5;
+        maxPelanggan = 100;
     }
     public void addPelanggan(Pelanggan p){
         if(nPelanggan<maxPelanggan){
