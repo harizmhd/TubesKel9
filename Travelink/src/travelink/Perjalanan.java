@@ -1,20 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package travelink;
 
-/**
- *
- * @author TOSHIBA
- */
 public class Perjalanan {
     private Pelanggan[] pelanggan;
     private int nPelanggan = 0;
     private int maxPelanggan;
-    private PaketWisata paket = new PaketWisata();
+    private PaketWisata paket;
     private long idPerjalanan;
+    private long idPelanggan;
     
     public Perjalanan(long idPerjalanan){
         this.idPerjalanan=idPerjalanan;
@@ -28,12 +21,12 @@ public class Perjalanan {
         }
     }
     public void setPaket(PaketWisata paket) {
-       
+       this.paket = new PaketWisata();
     }
-    public void setIdPelanggan(long idPelanggan){
-        
+    public void setIdPelanggan(long idPelanggan) {
+        this.idPelanggan = idPelanggan;
     }
-    public idPelanggan getIdPelanggan(){
-        return 
-    }
+    public long getIdPelanggan() {
+        return idPelanggan;
+    }   
 }
