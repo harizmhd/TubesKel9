@@ -32,5 +32,14 @@ public class Perjalanan {
     }
     public long getIdPelanggan() {
         return idPelanggan;
-    }   
+    }  
+
+    public void setIdPerjalanan(long idPerjalanan) {
+        this.idPerjalanan = idPerjalanan;
+    }
+
+    public long getIdPerjalanan() {
+        return idPerjalanan;
+    }
+    
 }
