@@ -4,6 +4,7 @@ public class TempatWisata {
     private long idTempat;
     private String namaTempat;
     private String deskripsiTempat;
+    private int hapusVariabelIni;
 
     public TempatWisata(long idTempat, String namaTempat, String deskripsiTempat) {
         this.idTempat = idTempat;
@@ -34,4 +35,6 @@ public class TempatWisata {
     public String getDeskripsiTempat() {
         return deskripsiTempat;
     }
+    
+    
 }
