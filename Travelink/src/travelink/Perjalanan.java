@@ -5,9 +5,10 @@ public class Perjalanan {
     private Pelanggan[] pelanggan;
     private int nPelanggan = 0;
     private int maxPelanggan;
-    private PaketWisata paket;
+    private PaketWisata[] paket;
     private long idPerjalanan;
     private long idPelanggan;
+    private int nPaket = 0;
     
     public Perjalanan(long idPerjalanan){
         this.idPerjalanan=idPerjalanan;
@@ -21,7 +22,10 @@ public class Perjalanan {
         }
     }
     public void setPaket(PaketWisata paket) {
-       this.paket = new PaketWisata();
+       if(nPaket<15){
+           this.paket[nPaket] = paket;
+           nPaket++;
+       }
     }
     public void setIdPelanggan(long idPelanggan) {
         this.idPelanggan = idPelanggan;
