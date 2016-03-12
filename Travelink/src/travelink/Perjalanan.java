@@ -5,15 +5,14 @@ public class Perjalanan {
     private Pelanggan[] pelanggan;
     private int nPelanggan = 0;
     private int maxPelanggan;
-    private PaketWisata[] paket;
+    private PaketWisata paket;
     private long idPerjalanan;
     private long idPelanggan;
-    private int nPaket = 0;
     
     public Perjalanan(long idPerjalanan){
         this.idPerjalanan=idPerjalanan;
-        pelanggan=new Pelanggan[100];
         maxPelanggan = 100;
+        pelanggan=new Pelanggan[maxPelanggan];
     }
     public void addPelanggan(Pelanggan p){
         if(nPelanggan<maxPelanggan){
@@ -22,10 +21,7 @@ public class Perjalanan {
         }
     }
     public void setPaket(PaketWisata paket) {
-       if(nPaket<15){
-           this.paket[nPaket] = paket;
-           nPaket++;
-       }
+        this.paket = paket;
     }
     public void setIdPelanggan(long idPelanggan) {
         this.idPelanggan = idPelanggan;

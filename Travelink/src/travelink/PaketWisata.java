@@ -1,16 +1,19 @@
 package travelink;
 
 public class PaketWisata {
-    private TempatWisata[] daftarTujuanWisata = new TempatWisata[10];
+    private TempatWisata[] daftarTujuanWisata;
     private long idPaket;
     private String namaPaket;
     private float hargaPaket;
-    private int jmlTempatWisata = 0;
+    private int nTempatWisata = 0;
+    private int maxTempatWisata;
     
     public PaketWisata(long idPaket, String namaPaket, float hargaPaket) {
         this.idPaket = idPaket;
         this.namaPaket = namaPaket;
         this.hargaPaket = hargaPaket;
+        maxTempatWisata = 50;
+        daftarTujuanWisata = new TempatWisata[maxTempatWisata];
     }
 
     public void setIdPaket(long idPaket) {
@@ -26,8 +29,10 @@ public class PaketWisata {
     }
     
     public void addTempatWisata(TempatWisata w){
-        this.daftarTujuanWisata[jmlTempatWisata] = w;
-        jmlTempatWisata++;
+        if(nTempatWisata<maxTempatWisata){
+            this.daftarTujuanWisata[nTempatWisata] = w;
+            nTempatWisata++;
+        }
     }
 
     public long getIdPaket() {
