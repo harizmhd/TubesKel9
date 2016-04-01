@@ -32,5 +32,9 @@ public class Perjalanan {
     public long getIdPerjalanan() {
         return idPerjalanan;
     }
-    
+
+    @Override
+    public String toString() {
+        return "ID: " + idPerjalanan + ", Pelanggan: " + nPelanggan + ", paket=" + paket.getNamaPaket();
+    }
 }

@@ -46,4 +46,14 @@ public class PaketWisata {
     public float getHargaPaket() {
         return hargaPaket;
     }
+
+    @Override
+    public String toString() {
+        String daftarTujuanWisataString = " ";
+        for (TempatWisata x : daftarTujuanWisata)
+            daftarTujuanWisataString += " " + x.getNamaTempat();
+        return "ID : " + idPaket + ", Nama Paket : " + namaPaket + ", Harga : " + hargaPaket
+                + "\n Tempat Wisata: " + daftarTujuanWisataString;
+    }
+    
 }

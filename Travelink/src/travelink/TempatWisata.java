@@ -34,6 +34,11 @@ public class TempatWisata {
     public String getDeskripsiTempat() {
         return deskripsiTempat;
     }
+
+    @Override
+    public String toString() {
+        return "ID : " + idTempat + ", Nama Tempat Wisata  : " + namaTempat + ", Deskripsi Tempat: " + deskripsiTempat;
+    }
     
     
 }

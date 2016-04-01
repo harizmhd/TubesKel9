@@ -1,35 +1,28 @@
 package travelink;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Aplikasi {
     Scanner scLong = new Scanner(System.in);
     Scanner scString = new Scanner(System.in);
     Scanner scInt = new Scanner(System.in);
     Scanner scFloat = new Scanner(System.in);
-    Scanner scChar = new Scanner(System.in);
-    
+
     int pilMainMenu = -1;
+    int pilSubMenu = -1;
     
-    final int maxList = 100;
-    
-    TempatWisata listTempatWisata[] = new TempatWisata[maxList];
-    PaketWisata listPaketWisata[] = new PaketWisata[maxList];
-    Pelanggan listPelanggan[] = new Pelanggan[maxList];
-    Perjalanan listPerjalanan[] = new Perjalanan[maxList];
-    
-    int nListTempatWisata;
-    int nListPaketWisata;
-    int nListPelanggan;
-    int nListPerjalanan;
+    ArrayList<TempatWisata> listTempatWisata = new ArrayList<>();
+    ArrayList<PaketWisata> listPaketWisata = new ArrayList<>();
+    ArrayList<Pelanggan> listPelanggan = new ArrayList<>();
+    ArrayList<Perjalanan> listPerjalanan = new ArrayList<>();
     
     public void mainMenu() {
         while(pilMainMenu != 0) {
             System.out.println("- Main Menu -");
-            System.out.println("1. Registrasi Tempat Wisata");
-            System.out.println("2. Registrasi Paket Wisata");
-            System.out.println("3. Registrasi Pelanggan");
-            System.out.println("4. Registrasi Perjalanan");
+            System.out.println("1. Tempat Wisata");
+            System.out.println("2. Paket Wisata");
+            System.out.println("3. Pelanggan");
+            System.out.println("4. Perjalanan");
             System.out.println("0. Logout");
             System.out.println();
             
@@ -38,57 +31,16 @@ public class Aplikasi {
                 pilMainMenu = scInt.nextInt();
                 switch (pilMainMenu) {
                     case 1:
-                        System.out.println("- Registrasi Tempat Wisata -");
-                        System.out.println("Id Tempat   : ");
-                        long idTempat = scLong.nextLong();
-                        System.out.println("Nama Tempat : ");
-                        String namaTempat = scString.nextLine();
-                        System.out.println("Deskripsi   : ");
-                        String deskripsiTempat = scString.nextLine();
-                        createTempatWisata(idTempat, namaTempat, deskripsiTempat);
-                        System.out.println();
-                        System.out.println("Tempat Wisata " + idTempat + " berhasil disimpan");
+                        subMenuTempatWisata();
                         break;
                     case 2:
-                        System.out.println("- Registrasi Paket Wisata -");
-                        System.out.println("Id Paket    : ");
-                        long idPaket = scLong.nextLong();
-                        System.out.println("Nama Paket  : ");
-                        String namaPaket = scString.nextLine();
-                        System.out.println("Harga Paket : ");
-                        float hargaPaket = scFloat.nextFloat();
-                        System.out.println("Pilih Tempat Wisata : ");
-                        /*
-                            Menampilkan list tempat wisata yang tersedia dan
-                            kemudian memilih paket wisata
-                        */
-                        TempatWisata[] dtw = new TempatWisata[50];
-                        createPaketWisata(idPaket, namaPaket, hargaPaket, dtw);
-                        System.out.println();
-                        System.out.println("Tempat Wisata " + idPaket + " berhasil disimpan");
+                        printPaketWisata();
                         break;
                     case 3:
-                        System.out.println("- Registrasi Pelanggan -");
-                        System.out.println("Id Pelanggan   : ");
-                        long idPelanggan = scLong.nextLong();
-                        System.out.println("Nama           : ");
-                        String nama = scString.nextLine();
-                        System.out.println("No KTP         : ");
-                        long noKtp = scLong.nextLong();
-                        System.out.println("Jenis Kelamin(L/P): ");
-                        char jenisKelamin = 'L';
-                        System.out.println("Alamat         : ");
-                        String alamat = scString.nextLine();
-                        System.out.println("E-mail         : ");
-                        String email = scString.nextLine();
-                        System.out.println("No. Telp        : ");
-                        long noTelp = scLong.nextLong();
-                        createPelanggan(idPelanggan, nama, noKtp, jenisKelamin, alamat, email, noTelp);
-                        System.out.println();
-                        System.out.println("Pelanggan " + idPelanggan + " berhasil disimpan");
+                        printPelanggan();
                         break;
                     case 4:
-                        
+                        printPerjalanan();
                         break;
                     case 0:
                         break;
@@ -102,8 +54,7 @@ public class Aplikasi {
     // createTempatWisata melakukan instansiasi dan insert objek ke dalam listTempatWisata 
     private void createTempatWisata(long idTempat, String namaTempat, String deskripsiTempat) {
         TempatWisata tw = new TempatWisata(idTempat, namaTempat, deskripsiTempat);
-        listTempatWisata[nListTempatWisata] = tw;
-        nListTempatWisata++;
+        listTempatWisata.add(tw);
     }
     
     // createPaketWisata melakukan instansiasi, addPaketWisata, dan insert objek ke dalam listPaketWisata
@@ -112,19 +63,17 @@ public class Aplikasi {
     private void createPaketWisata(long idPaket, String namaPaket, float hargaPaket, TempatWisata[] dtw) {
         PaketWisata pw = new PaketWisata(idPaket, namaPaket, hargaPaket);
         int n = 0;
-        while (dtw[n] != null) {
+        while (n < dtw.length) {
             pw.addTempatWisata(dtw[n]);
             n++;
         }
-        listPaketWisata[nListPaketWisata] = pw;
-        nListPaketWisata++;
+        listPaketWisata.add(pw);
     }
     
     // createPelanggan melakukan instansiasi dan insert objek ke dalam listPelanggan 
     private void createPelanggan(long idKTP, String nama, long noKtp, char jenisKelamin, String alamat, String email, long noTelp) {
         Pelanggan pg = new Pelanggan(idKTP, nama, noKtp, jenisKelamin, alamat, email, noTelp);
-        listPelanggan[nListPelanggan] = pg;
-        nListPelanggan++;
+        listPelanggan.add(pg);
     }
     
     // createPerjalanan melakukan instansiasi, addPelanggan, dan insert objek ke dalam listPaketWisata
@@ -138,8 +87,7 @@ public class Aplikasi {
             pj.addPelanggan(dpg[n]);
             n++;
         }
-        listPerjalanan[nListPerjalanan] = pj;
-        nListPerjalanan++;
+        listPerjalanan.add(pj);
     }
     
     public void deleteTempatWisata() {
@@ -158,4 +106,82 @@ public class Aplikasi {
         
     }
     
+    //print isi listTempatWisata
+    public void printTempatWisata() {
+        System.out.println("\n- List Tempat Wisata -");
+        if (listTempatWisata.isEmpty())
+            System.out.println("List kosong.\n");
+        else {
+            for (int i = 0; i < listTempatWisata.size(); i++)
+                System.out.println(i + 1 + ": " + listTempatWisata.get(i).toString());
+        }
+    }
+    
+    //print isi listPaketWisata
+    public void printPaketWisata() {
+        System.out.println("\n- List Paket Wisata -");
+        if (listPaketWisata.isEmpty())
+            System.out.println("List kosong.\n");
+        else {
+            for (int i = 0; i < listPaketWisata.size(); i++)
+                System.out.println(i + 1 + ": " + listPaketWisata.get(i).toString());
+        }
+    }
+    
+    //print isi listPelanggan
+    public void printPelanggan() {
+        System.out.println("\n- List Pelanggan-");
+        if (listPelanggan.isEmpty())
+            System.out.println("List kosong.\n");
+        else {
+            for (int i = 0; i < listPelanggan.size(); i++)
+                System.out.println(i + 1 + ": " + listPelanggan.get(i).toString());
+        }
+    }
+    
+    //print isi listPerjalanan
+    public void printPerjalanan() {
+        System.out.println("\n- List Perjalanan-");
+        if (listPelanggan.isEmpty())
+            System.out.println("List kosong.\n");
+        else {
+            for (int i = 0; i < listPelanggan.size(); i++)
+                System.out.println(i + 1 + ": " + listPelanggan.get(i).toString());
+        }
+    }
+    
+    public void subMenuTempatWisata() {
+        pilSubMenu = -1;
+        
+        while (pilSubMenu != 0) {
+            printTempatWisata();
+            System.out.println("- Sub Menu -");
+            System.out.println("1. Add");
+            System.out.println("2. Remove");
+            System.out.println("0. Back");
+            System.out.print("Pilihan: ");
+            try {
+                pilSubMenu = scInt.nextInt();
+                switch(pilSubMenu) {
+                    case 1:
+                        System.out.println("\n- Registrasi Tempat Wisata -");
+                        System.out.print("ID : ");
+                        long idTempat = scLong.nextLong();
+                        System.out.print("Nama Tempat Wisata : ");
+                        String namaTempat = scString.nextLine();
+                        System.out.print("Deskripsi : ");
+                        String deskripsiTempat = scString.nextLine();
+                        createTempatWisata(idTempat, namaTempat, deskripsiTempat);
+                        System.out.println("\'Tempat Wisata Tersimpan\'");
+                        break;
+                    case 2:
+                        break;
+                    case 0:
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Input Salah");
+            }
+        }    
+    }
 }

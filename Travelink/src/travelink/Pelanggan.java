@@ -2,25 +2,28 @@
 package travelink;
 
 class Pelanggan extends Orang {
-    private long idKTP;
+    private long idPelanggan;
 
     public Pelanggan(long idKTP, String nama, long noKtp) {
         super(nama, noKtp);
-        this.idKTP = idKTP;
+        this.idPelanggan = idKTP;
     }
 
     public Pelanggan(long idKTP, String nama, long noKtp, char jenisKelamin, String alamat, String email, long noTelp) {
         super(nama, noKtp, jenisKelamin, alamat, email, noTelp);
-        this.idKTP = idKTP;
+        this.idPelanggan = idKTP;
     }
 
     public long getIdKTP() {
-        return idKTP;
+        return idPelanggan;
     }
 
     public void setIdKTP(long idKTP) {
-        this.idKTP = idKTP;
+        this.idPelanggan = idKTP;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "ID: " + idPelanggan + super.toString();
+    }
 }

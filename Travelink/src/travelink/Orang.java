@@ -70,4 +70,9 @@ public abstract class Orang {
     public long getNoTelp() {
         return noTelp;
     }
+
+    @Override
+    public String toString() {
+        return "Nama: " + nama + ", No KTP: " + noKtp + ", J Kelamin: " + jenisKelamin + ", Alamat: " + alamat + ", E-mail: " + email + ", Telp: " + noTelp;
+    }
 }
