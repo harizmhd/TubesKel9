@@ -37,7 +37,7 @@ public class TempatWisata {
 
     @Override
     public String toString() {
-        return "ID : " + idTempat + ", Nama Tempat Wisata  : " + namaTempat + ", Deskripsi Tempat: " + deskripsiTempat;
+        return "ID: " + idTempat + ", Nama Tempat Wisata: " + namaTempat + ", Deskripsi Tempat: " + deskripsiTempat;
     }
     
     
