@@ -50,10 +50,15 @@ public class PaketWisata {
     @Override
     public String toString() {
         String daftarTujuanWisataString = " ";
-        for (TempatWisata x : daftarTujuanWisata)
-            daftarTujuanWisataString += " " + x.getNamaTempat();
+        for (int i=0; i<nTempatWisata; i++) {
+            if (i==0)
+                daftarTujuanWisataString += daftarTujuanWisata[i].getNamaTempat();
+            else
+                daftarTujuanWisataString += ", " + daftarTujuanWisata[i].getNamaTempat();
+        }
+            
         return "ID : " + idPaket + ", Nama Paket : " + namaPaket + ", Harga : " + hargaPaket
-                + "\n Tempat Wisata: " + daftarTujuanWisataString;
+                + "\n Tujuan Wisata:" + daftarTujuanWisataString;
     }
     
 }

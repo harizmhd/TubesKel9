@@ -35,6 +35,14 @@ public class Perjalanan {
 
     @Override
     public String toString() {
-        return "ID: " + idPerjalanan + ", Pelanggan: " + nPelanggan + ", paket=" + paket.getNamaPaket();
+        String daftarPelanggan = " ";
+        for (int i=0; i<nPelanggan; i++) {
+            if (i==0)
+                daftarPelanggan += pelanggan[i].getNama();
+            else
+                daftarPelanggan += ", " + pelanggan[i].getNama();
+        }
+        return "ID: " + idPerjalanan + ", paket=" + paket.getNamaPaket() +
+                ", Pelanggan:" + daftarPelanggan;
     }
 }

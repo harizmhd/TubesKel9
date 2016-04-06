@@ -4,21 +4,21 @@ package travelink;
 class Pelanggan extends Orang {
     private long idPelanggan;
 
-    public Pelanggan(long idKTP, String nama, long noKtp) {
+    public Pelanggan(long idPelanggan, String nama, long noKtp) {
         super(nama, noKtp);
-        this.idPelanggan = idKTP;
+        this.idPelanggan = idPelanggan;
     }
 
-    public Pelanggan(long idKTP, String nama, long noKtp, char jenisKelamin, String alamat, String email, long noTelp) {
+    public Pelanggan(long idPelanggan, String nama, long noKtp, char jenisKelamin, String alamat, String email, long noTelp) {
         super(nama, noKtp, jenisKelamin, alamat, email, noTelp);
-        this.idPelanggan = idKTP;
+        this.idPelanggan = idPelanggan;
     }
 
-    public long getIdKTP() {
+    public long getIdPelanggan() {
         return idPelanggan;
     }
 
-    public void setIdKTP(long idKTP) {
+    public void setIdPelanggan(long idKTP) {
         this.idPelanggan = idKTP;
     }
 
