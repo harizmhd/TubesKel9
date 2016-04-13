@@ -65,18 +65,15 @@ public class Aplikasi {
                         String tmpPassword2 = scString.nextLine();
                         if (!tmpPassword.equals(tmpPassword2))
                             throw new RuntimeException("Password yang dimasukkan tidak sama");
-                        System.out.print("ID : ");
-                        Long idPegawai = scLong.nextLong();
-                        scLong.nextLine();
+                        long idPegawai = incrementId(1);
+                        System.out.println("ID : " + idPegawai);
                         System.out.print("Nama : ");
                         String nama = scString.nextLine();
                         System.out.print("No KTP : ");
                         Long noKtp = scLong.nextLong();
-                        scLong.nextLine();
                         System.out.print("Jenis Kelamin :\n(1) Laki-laki\n(2) Perempuan"
                                 + "\nPilihan : ");
                         int pilihJenisKelamin = scInt.nextInt();
-                        scInt.nextLine();
                         char jenisKelamin;
                         switch (pilihJenisKelamin) {
                             case 1:
@@ -94,7 +91,6 @@ public class Aplikasi {
                         String email = scString.nextLine();
                         System.out.print("No Telp : ");
                         Long noTelp = scLong.nextLong();
-                        scLong.nextLine();
                         createPetugas(idPegawai, tmpUsername, tmpPassword, nama, noKtp, jenisKelamin, alamat, email, noTelp);
                         System.out.println("\'Akun berhasil dibuat\'");
                     } catch (java.util.InputMismatchException e) {
@@ -106,6 +102,9 @@ public class Aplikasi {
                     } catch (Exception e) {
                         System.out.println("Exception occurred : " + e.getMessage());
                         System.out.println("\'Registrasi dibatalkan\'");
+                    } finally {
+                        scLong.nextLine();
+                        scInt.nextLine();
                     }
                     break;
                 case 0:
@@ -220,10 +219,10 @@ public class Aplikasi {
         
         switch (pilSubMenu) {
             case 1:
-                System.out.print("\n- Registrasi Tempat Wisata -\nID : ");
+                System.out.print("\n- Registrasi Tempat Wisata -\n");
                 try {
-                    idTempat = scLong.nextLong();
-                    scLong.nextLine();
+                    idTempat = incrementId(2);
+                    System.out.println("ID : " + idTempat);
                     System.out.print("Nama Tempat Wisata : ");
                     namaTempat = scString.nextLine();
                     System.out.print("Deskripsi : ");
@@ -298,21 +297,10 @@ public class Aplikasi {
                 dtw = new TempatWisata[50];
                 nTw = 0;
 
-                if (lanjutInput) {
-                    System.out.print("\n- Tambah Paket Wisata -\nID : ");
-                    try {
-                        idPaket = scLong.nextLong();
-                    } catch (java.util.InputMismatchException e) {
-                        System.out.println("input mismatch");
-                        lanjutInput = false;
-                    } catch (Exception e) {
-                        System.out.println("Exception occurred : " + e.getMessage());
-                        lanjutInput = false;
-                    } finally {
-                        scLong.nextLine();
-                    }
-                }
-
+                System.out.print("\n- Tambah Paket Wisata -\n");
+                idPaket = incrementId(3);
+                System.out.println("ID : " + idPaket);
+                
                 if (lanjutInput) {
                     do {
                         System.out.println("\nPilih Tempat Wisata akan disimpan"
@@ -436,10 +424,10 @@ public class Aplikasi {
         
         switch (pilSubMenu) {
             case 1:
-                    System.out.print("\n- Registrasi Pelangggan -\nID : ");
+                    System.out.print("\n- Registrasi Pelangggan -\n");
                 try {
-                    idPelanggan = scLong.nextLong();
-                    scLong.nextLine();
+                    idPelanggan = incrementId(4);
+                    System.out.println("ID : " + idPelanggan);
                     System.out.print("Nama : ");
                     nama = scString.nextLine();
                     System.out.print("No KTP : ");
@@ -448,7 +436,6 @@ public class Aplikasi {
                     System.out.print("Jenis Kelamin :\n(1) Laki-laki\n(2) Perempuan"
                             + "\nPilihan : ");
                     pilihJenisKelamin = scInt.nextInt();
-                    scInt.nextLine();
                     switch (pilihJenisKelamin) {
                         case 1:
                             jenisKelamin = 'L';
@@ -465,7 +452,6 @@ public class Aplikasi {
                     email = scString.nextLine();
                     System.out.print("No Telp : ");
                     noTelp = scLong.nextLong();
-                    scLong.nextLine();
                     createPelanggan(idPelanggan, nama, noKtp, jenisKelamin, alamat, email, noTelp);
                     System.out.println("\'Registrasi selesai\'");
                 } catch (java.util.InputMismatchException e) {
@@ -477,6 +463,9 @@ public class Aplikasi {
                 } catch (Exception e) {
                     System.out.println("Exception occurred : " + e.getMessage());
                     System.out.println("\'Registrasi dibatalkan\'");
+                } finally {
+                    scLong.nextLine();
+                    scInt.nextLine();
                 }
                 break;
 
@@ -532,27 +521,15 @@ public class Aplikasi {
         switch (pilSubMenu) {
             case 1:
                 lanjutInput = true;
-                idPerjalanan = -1;
                 idPelanggan = -2;
                 idPaket = -1;
                 paket = null;
                 dpg = new Pelanggan[100];
                 nPg = 0;
 
-                if (lanjutInput) {
-                    System.out.print("\n- Registrasi Perjalanan -\nID : ");
-                    try {
-                        idPerjalanan = scLong.nextLong();
-                    } catch (java.util.InputMismatchException e) {
-                        System.out.println("input mismatch");
-                        lanjutInput = false;
-                    } catch (Exception e) {
-                        System.out.println("Exception occurred : " + e.getMessage());
-                        lanjutInput = false;
-                    } finally {
-                        scLong.nextLine();
-                    }
-                }
+                System.out.print("\n- Registrasi Perjalanan -\n");                    
+                idPerjalanan = incrementId(5);
+                System.out.println("ID : " + idPerjalanan);
                 
                 if (lanjutInput) {
                     System.out.println("\nPilih Paket Wisata akan didaftarkan"
@@ -671,12 +648,18 @@ public class Aplikasi {
     // createPetugas melakukan instansiasi dan insert objek ke dalam listPetugas 
     private void createPetugas(long idPegawai, String username, String password, String nama, long noKtp, char jenisKelamin,
     String alamat, String email, long noTelp) {
-        Petugas pt = new Petugas(idPegawai, username, password, nama, noKtp, jenisKelamin, alamat, email, noTelp);
-        try {
+        boolean usernameExist = false;
+        for (Petugas x : listPetugas) {
+            if (x.getUsername().equals(username)) {
+                usernameExist = true;
+            }
+        }
+        if (usernameExist) {
+            throw new RuntimeException("Username telah digunakan oleh ID lain");
+        } else {
+            Petugas pt = new Petugas(idPegawai, username, password, nama, noKtp, jenisKelamin, alamat, email, noTelp);
             listPetugas.add(pt);
-        } catch(Exception e) {
-            System.out.println("Exception occurred : " + e.getMessage());
-        }        
+        }
     }
     
     // createTempatWisata melakukan instansiasi dan insert objek ke dalam listTempatWisata 
@@ -976,5 +959,63 @@ public class Aplikasi {
                 return false;
         } else
             return false;
+    }
+    
+    /* tipeData:
+        (1) mengeluarkan increment dari idPegawai tertinggi
+        (2) mengeluarkan increment dari idTempat tertinggi
+        (3) mengeluarkan increment dari idPaket tertinggi
+        (4) mengeluarkan increment dari idPelanggan tertinggi
+        (5) mengeluarkan increment dari idPerjalanan tertinggi
+       Format ID:
+        idPegawai   : 1xxxxxxx    idTempat    : 2xxxxxxx
+        idPaket     : 3xxxxxxx    idPelanggan : 4xxxxxxx
+        idPerjalanan: 5xxxxxxx
+    */ 
+    private long incrementId(int tipeData){
+        long id = 0;
+        switch(tipeData) {
+            case 1:
+                id = 10000001;
+                for (Petugas x : listPetugas) {
+                    if (id <= x.getIdPegawai()) {
+                        id = x.getIdPegawai() + 1;
+                    }
+                }
+                break;
+            case 2:
+                id = 20000001;
+                for (TempatWisata x : listTempatWisata) {
+                    if (id <= x.getIdTempat()) {
+                        id = x.getIdTempat() + 1;
+                    }
+                }
+                break;
+            case 3:
+                id = 30000001;
+                for (PaketWisata x : listPaketWisata) {
+                    if (id <= x.getIdPaket()) {
+                        id = x.getIdPaket() + 1;
+                    }
+                }
+                break;
+            case 4:
+                id = 40000001;
+                for (Pelanggan x : listPelanggan) {
+                    if (id <= x.getIdPelanggan()) {
+                        id = x.getIdPelanggan() + 1;
+                    }
+                }
+                break;
+            case 5:
+                id = 50000001;
+                for (Perjalanan x : listPerjalanan) {
+                    if (id <= x.getIdPerjalanan()) {
+                        id = x.getIdPerjalanan() + 1;
+                    }
+                }
+                break;
+        }
+        return id;
     }
 }
