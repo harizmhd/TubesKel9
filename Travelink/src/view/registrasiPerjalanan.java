@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelinkGUI;
+package view;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -39,7 +39,6 @@ public class registrasiPerjalanan extends javax.swing.JFrame {
         btnSubmit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(480, 320));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

@@ -1,11 +1,6 @@
-package controller;
+package model;
 
 import java.util.*;
-import model.PaketWisata;
-import model.Pelanggan;
-import model.Perjalanan;
-import model.Petugas;
-import model.TempatWisata;
 
 public class Aplikasi {
     private ArrayList<Petugas> listPetugas;

@@ -6,9 +6,6 @@
 package view;
 
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
 /**

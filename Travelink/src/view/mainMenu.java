@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelinkGUI;
+package view;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -51,14 +51,6 @@ public class mainMenu extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(480, 320));
 
-        btnPaketWisata.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\New folder (3)\\1a.png")); // NOI18N
-
-        btnPelanggan.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\New folder (3)\\2b.png")); // NOI18N
-
-        btnPerjalanan.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\New folder (3)\\3a.png")); // NOI18N
-
-        btnTempatWisata.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\New folder (3)\\4.png")); // NOI18N
-
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tempat Wisata");
 
@@ -71,7 +63,6 @@ public class mainMenu extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Perjalanan");
 
-        btnSignOut.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ruri\\Documents\\Tubes PBO\\sign ouut.png")); // NOI18N
         btnSignOut.setAutoscrolls(true);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -139,8 +130,6 @@ public class mainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(btnSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        btnTempatWisata.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

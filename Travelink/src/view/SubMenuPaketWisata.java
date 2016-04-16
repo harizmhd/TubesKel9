@@ -1,9 +1,7 @@
 package view;
 
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionListener;
 
 public class SubMenuPaketWisata extends javax.swing.JFrame {

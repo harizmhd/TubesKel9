@@ -1,4 +1,4 @@
-package travelinkGUI;
+package view;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -27,8 +27,6 @@ public class subMenuPerjalanan extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(480, 320));
-        setPreferredSize(new java.awt.Dimension(480, 320));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
