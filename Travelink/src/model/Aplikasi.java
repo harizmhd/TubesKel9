@@ -646,7 +646,7 @@ public class Aplikasi {
     }
     
     // createPetugas melakukan instansiasi dan insert objek ke dalam listPetugas 
-    private void createPetugas(long idPegawai, String username, String password, String nama, long noKtp, char jenisKelamin,
+    public void createPetugas(long idPegawai, String username, String password, String nama, long noKtp, char jenisKelamin,
     String alamat, String email, long noTelp) {
         boolean usernameExist = false;
         for (Petugas x : listPetugas) {
@@ -663,7 +663,7 @@ public class Aplikasi {
     }
     
     // createTempatWisata melakukan instansiasi dan insert objek ke dalam listTempatWisata 
-    private void createTempatWisata(long idTempat, String namaTempat, String deskripsiTempat) {
+    public void createTempatWisata(long idTempat, String namaTempat, String deskripsiTempat) {
         TempatWisata tw = new TempatWisata(idTempat, namaTempat, deskripsiTempat);
         try {
             listTempatWisata.add(tw);
@@ -675,7 +675,7 @@ public class Aplikasi {
     /* createPaketWisata melakukan instansiasi, addPaketWisata, dan insert objek ke dalam listPaketWisata
        dtw adlh 'array of TempatWisata' yang sementara menampung kumpulan TempatWisata sebelum di add ke PaketWisata
        method ini akan satu per satu meng-add (menyalin) isi dari dtw ke objek PaketWisata */
-    private void createPaketWisata(long idPaket, String namaPaket, float hargaPaket, TempatWisata[] dtw) {
+    public void createPaketWisata(long idPaket, String namaPaket, float hargaPaket, TempatWisata[] dtw) {
         PaketWisata pw = new PaketWisata(idPaket, namaPaket, hargaPaket);
         int n = 0;
         while (n < dtw.length && dtw[n] != null) {
@@ -690,7 +690,7 @@ public class Aplikasi {
     }
     
     // createPelanggan melakukan instansiasi dan insert objek ke dalam listPelanggan 
-    private void createPelanggan(long idPelanggan, String nama, long noKtp, char jenisKelamin, String alamat, String email, long noTelp) {
+    public void createPelanggan(long idPelanggan, String nama, long noKtp, char jenisKelamin, String alamat, String email, long noTelp) {
         Pelanggan pg = new Pelanggan(idPelanggan, nama, noKtp, jenisKelamin, alamat, email, noTelp);
         try {
             listPelanggan.add(pg);
@@ -702,7 +702,7 @@ public class Aplikasi {
     /* createPerjalanan melakukan instansiasi, addPelanggan, dan insert objek ke dalam listPaketWisata
        dpg adlh 'array of Pelanggan' yang sementara menampung kumpulan Pelanggan sebelum di add ke Perjalanan
        method ini akan satu per satu meng-add (menyalin) isi dari dpg ke objek Perjalanan */
-    private void createPerjalanan(long idPerjalanan, PaketWisata paket, Pelanggan[] dpg) {
+    public void createPerjalanan(long idPerjalanan, PaketWisata paket, Pelanggan[] dpg) {
         Perjalanan pj = new Perjalanan(idPerjalanan);
         pj.setPaket(paket);
         int n = 0;
@@ -720,7 +720,7 @@ public class Aplikasi {
     /* mencari dan menghapus Petugas dengan idPegawai x di dalam listPetugas
        mengeluarkan hasil true jika berhasil menghapus, mengeluarkan hasil false jika Petugas
        tidak ditemukan */
-    private boolean searchDeletePetugas(long x) {
+    public boolean searchDeletePetugas(long x) {
         boolean delete = false;
         Petugas y = searchPetugas(x);
         /* Antara proses mencari instance dengan menghapus instance perlu dipisah
@@ -740,7 +740,7 @@ public class Aplikasi {
     /* mencari dan menghapus TempatWisata dengan idTempat x di dalam listTempatWisata
        mengeluarkan hasil true jika berhasil menghapus, mengeluarkan hasil false jika TempatWisata
        tidak ditemukan */
-    private boolean searchDeleteTempatWisata(long x) {
+    public boolean searchDeleteTempatWisata(long x) {
         boolean delete = false;       
         TempatWisata y = searchTempatWisata(x);        
         /* Antara proses mencari instance dengan menghapus instance perlu dipisah
@@ -760,7 +760,7 @@ public class Aplikasi {
     /* mencari dan menghapus PaketWisata dengan idPaket x di dalam listPaketWisata
        mengeluarkan hasil true jika berhasil menghapus, mengeluarkan hasil false jika PaketWisata
        tidak ditemukan */
-    private boolean searchDeletePaketWisata(long x) {
+    public boolean searchDeletePaketWisata(long x) {
         boolean delete = false;        
         PaketWisata y = searchPaketWisata(x);
         /* Antara proses mencari instance dengan menghapus instance perlu dipisah
@@ -780,7 +780,7 @@ public class Aplikasi {
     /* mencari dan menghapus Pelanggan dengan idPelanggan x di dalam listPelanggan
        mengeluarkan hasil true jika berhasil menghapus, mengeluarkan hasil false jika Pelanggan
        tidak ditemukan */
-    private boolean searchDeletePelanggan(long x) {
+    public boolean searchDeletePelanggan(long x) {
         boolean delete = false;
         Pelanggan y = searchPelanggan(x);
         /* Antara proses mencari instance dengan menghapus instance perlu dipisah
@@ -800,7 +800,7 @@ public class Aplikasi {
     /* mencari dan menghapus Perjalanan dengan idPerjalanan x di dalam listPerjalanan
        mengeluarkan hasil true jika berhasil menghapus, mengeluarkan hasil false jika Pejalanan
        tidak ditemukan */
-    private boolean searchDeletePerjalanan(long x) {
+    public boolean searchDeletePerjalanan(long x) {
         boolean delete = false;
         Perjalanan y = searchPerjalanan(x);        
         /* Antara proses mencari instance dengan menghapus instance perlu dipisah
@@ -820,7 +820,7 @@ public class Aplikasi {
     
     /* mencari Petugas dengan idPegawai x di dalam listPetugas
        return object jika ditemukan dan return null jika tidak ditemukan */
-    private Petugas searchPetugas(long x) {
+    public Petugas searchPetugas(long x) {
         Petugas result = null;
         for (Petugas y : listPetugas) {
             if (y.getIdPegawai() == x) {
@@ -832,7 +832,7 @@ public class Aplikasi {
     
     /* mencari Petugas dengan username x di dalam listPetugas
        return object jika ditemukan dan return null jika tidak ditemukan */
-    private Petugas searchPetugas(String x) {
+    public Petugas searchPetugas(String x) {
         Petugas result = null;
         for (Petugas y : listPetugas) {
             if (y.getUsername().equals(x)) {
@@ -844,7 +844,7 @@ public class Aplikasi {
     
     /* mencari TempatWisata dengan idTempat x di dalam listPerjalanan
        return object jika ditemukan dan return null jika tidak ditemukan */
-    private TempatWisata searchTempatWisata(long x) {
+    public TempatWisata searchTempatWisata(long x) {
         TempatWisata result = null;
         for (TempatWisata y : listTempatWisata) {
             if (y.getIdTempat() == x) {
@@ -856,7 +856,7 @@ public class Aplikasi {
     
     /* mencari TempatWisata dengan idTempat x di dalam listPerjalanan
        return object jika ditemukan dan return null jika tidak ditemukan */
-    private PaketWisata searchPaketWisata(long x) {
+    public PaketWisata searchPaketWisata(long x) {
         PaketWisata result = null;
         for (PaketWisata y : listPaketWisata) {
             if (y.getIdPaket() == x) {
@@ -868,7 +868,7 @@ public class Aplikasi {
     
     /* mencari TempatWisata dengan idTempat x di dalam listPerjalanan
        return object jika ditemukan dan return null jika tidak ditemukan */
-    private Pelanggan searchPelanggan(long x) {
+    public Pelanggan searchPelanggan(long x) {
         Pelanggan result = null;
         for (Pelanggan y : listPelanggan) {
             if (y.getIdPelanggan() == x) {
@@ -880,7 +880,7 @@ public class Aplikasi {
     
     /* mencari TempatWisata dengan idTempat x di dalam listPerjalanan
        return object jika ditemukan dan return null jika tidak ditemukan */
-    private Perjalanan searchPerjalanan(long x) {
+    public Perjalanan searchPerjalanan(long x) {
         Perjalanan result = null;
         for (Perjalanan y : listPerjalanan) {
             if (y.getIdPerjalanan() == x) {
@@ -891,7 +891,7 @@ public class Aplikasi {
     }
     
     //print isi listPetugas
-    private String printPetugas() {
+    public String printPetugas() {
         String printOut = "\n- List Petugas-\n";
         
         if (!listPetugas.isEmpty()) {
@@ -903,7 +903,7 @@ public class Aplikasi {
     }
     
     //print isi listTempatWisata
-    private String printTempatWisata() {
+    public String printTempatWisata() {
         String printOut = ("\n- List Tempat Wisata -\n");
         
         if (!listTempatWisata.isEmpty()) {
@@ -915,7 +915,7 @@ public class Aplikasi {
     }
     
     //print isi listPaketWisata
-    private String printPaketWisata() {
+    public String printPaketWisata() {
         String printOut = ("\n- List Paket Wisata -\n");
         
         if (!listPaketWisata.isEmpty()) {
@@ -927,7 +927,7 @@ public class Aplikasi {
     }
     
     //print isi listPelanggan
-    private String printPelanggan() {
+    public String printPelanggan() {
         String printOut = "\n- List Pelanggan-\n";
         
         if (!listPelanggan.isEmpty()) {
@@ -939,7 +939,7 @@ public class Aplikasi {
     }
     
     //print isi listPerjalanan
-    private String printPerjalanan() {
+    public String printPerjalanan() {
         String printOut = "\n- List Perjalanan-\n";
         
         if (!listPerjalanan.isEmpty()) {
@@ -950,7 +950,7 @@ public class Aplikasi {
         return printOut;
     }
 
-    private boolean login(String username, String password) {
+    public boolean login(String username, String password) {
         Petugas x = searchPetugas(username);
         if (x!=null) {
             if (x.getPassword().equals(password))
@@ -972,7 +972,7 @@ public class Aplikasi {
         idPaket     : 3xxxxxxx    idPelanggan : 4xxxxxxx
         idPerjalanan: 5xxxxxxx
     */ 
-    private long incrementId(int tipeData){
+    public long incrementId(int tipeData){
         long id = 0;
         switch(tipeData) {
             case 1:

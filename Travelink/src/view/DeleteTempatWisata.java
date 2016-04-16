@@ -3,7 +3,7 @@ package view;
 import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionListener;
 
-public class DeleteTempatWisata extends javax.swing.JFrame {
+public class DeleteTempatWisata extends javax.swing.JFrame implements View{
 
     /**
      * Creates new form deleteTempatWisata
@@ -155,9 +155,14 @@ public class DeleteTempatWisata extends javax.swing.JFrame {
         txKeterangan.setText(keterangan);
     }
     
-    public void addListener(ActionListener er, ListSelectionListener sl) {
+    public void addListSelectionListener(ListSelectionListener sl) {
+        listTempatWisata.addListSelectionListener(sl);
+    }
+    
+    @Override
+    public void addListener(ActionListener er) {
         btnBack.addActionListener(er);
         btnDelete.addActionListener(er);
-        listTempatWisata.addListSelectionListener(sl);
+   
     }    
 }

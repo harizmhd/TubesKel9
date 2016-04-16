@@ -7,13 +7,12 @@ package view;
 
 import java.awt.event.ActionListener;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author MHz
  */
-public class SubMenuPelanggan extends javax.swing.JFrame {
+public class SubMenuPelanggan extends javax.swing.JFrame implements View{
 
     /**
      * Creates new form SubMenuPelanggan
@@ -34,12 +33,9 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPelanggan = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txKeterangan = new javax.swing.JTextArea();
         btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,6 +45,12 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
 
         tbPelanggan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -75,11 +77,6 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbPelanggan);
 
-        txKeterangan.setEditable(false);
-        txKeterangan.setColumns(20);
-        txKeterangan.setRows(5);
-        jScrollPane2.setViewportView(txKeterangan);
-
         btnDelete.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         btnDelete.setText("Delete");
 
@@ -88,9 +85,6 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
 
         btnBack.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         btnBack.setText("Back");
-
-        jLabel2.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
-        jLabel2.setText("Keterangan");
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel3.setText("Daftar Pelanggan");
@@ -107,19 +101,18 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(355, 355, 355))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
+                        .addComponent(jLabel3)
+                        .addContainerGap(384, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,12 +122,8 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnAdd)
@@ -150,12 +139,9 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbPelanggan;
-    private javax.swing.JTextArea txKeterangan;
     // End of variables declaration//GEN-END:variables
 
     public Object getBtnAdd() {
@@ -173,12 +159,9 @@ public class SubMenuPelanggan extends javax.swing.JFrame {
     public void setTbPelanggan(JTable tbPaketWisata) {
         this.tbPelanggan = tbPaketWisata;
     }
-
-    public void setKeterangan(String keterangan) {
-        txKeterangan.setText(keterangan);
-    }
-
-    public void addListener(ActionListener er, ListSelectionListener sl) {
+    
+    @Override
+    public void addListener(ActionListener er) {
         btnDelete.addActionListener(er);
         btnDelete.addActionListener(er);
         btnAdd.addActionListener(er);

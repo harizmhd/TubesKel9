@@ -2,9 +2,8 @@ package view;
 
 import java.awt.event.ActionListener;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionListener;
 
-public class SubMenuPaketWisata extends javax.swing.JFrame {
+public class SubMenuPaketWisata extends javax.swing.JFrame implements View {
 
     /**
      * Creates new form subMenuPaketWisata
@@ -175,7 +174,8 @@ public class SubMenuPaketWisata extends javax.swing.JFrame {
         txKeterangan.setText(keterangan);
     }
 
-    public void addListener(ActionListener er, ListSelectionListener sl) {
+    @Override
+    public void addListener(ActionListener er) {
         btnBack.addActionListener(er);
         btnDelete.addActionListener(er);
         btnAdd.addActionListener(er);
