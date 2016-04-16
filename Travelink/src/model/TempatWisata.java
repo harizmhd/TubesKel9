@@ -1,4 +1,4 @@
-package travelink;
+package model;
 
 public class TempatWisata {
     private long idTempat;

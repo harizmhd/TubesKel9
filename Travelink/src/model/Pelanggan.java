@@ -1,7 +1,7 @@
 
-package travelink;
+package model;
 
-class Pelanggan extends Orang {
+public class Pelanggan extends Orang {
     private long idPelanggan;
 
     public Pelanggan(long idPelanggan, String nama, long noKtp) {

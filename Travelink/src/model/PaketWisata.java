@@ -1,4 +1,4 @@
-package travelink;
+package model;
 
 public class PaketWisata {
     private TempatWisata[] daftarTujuanWisata;

@@ -1,5 +1,5 @@
 
-package travelink;
+package model;
 
 public class Perjalanan {
     private Pelanggan[] pelanggan;

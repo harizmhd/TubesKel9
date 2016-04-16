@@ -1,4 +1,4 @@
-package travelink;
+package model;
 
 public abstract class Orang {
     private String nama;

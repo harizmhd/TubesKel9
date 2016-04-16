@@ -1,4 +1,4 @@
-package travelink;
+package model;
 
 public class Petugas extends Orang {
     private long idPegawai;
