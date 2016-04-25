@@ -33,6 +33,18 @@ public class Perjalanan {
         return idPerjalanan;
     }
 
+    public PaketWisata getPaket() {
+        return paket;
+    }
+
+    public Pelanggan[] getPelanggan() {
+        return pelanggan;
+    }
+
+    public int getnPelanggan() {
+        return nPelanggan;
+    }
+
     @Override
     public String toString() {
         String daftarPelanggan = " ";

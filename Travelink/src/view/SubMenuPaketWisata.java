@@ -1,7 +1,10 @@
 package view;
 
 import java.awt.event.ActionListener;
-import javax.swing.JTable;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import model.PaketWisata;
 
 public class SubMenuPaketWisata extends javax.swing.JFrame implements View {
 
@@ -44,22 +47,16 @@ public class SubMenuPaketWisata extends javax.swing.JFrame implements View {
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
+                {null, null, null},
                 {null, null, null}
             },
             new String [] {
                 "ID", "Nama Paket", "Harga"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.Long.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -96,41 +93,38 @@ public class SubMenuPaketWisata extends javax.swing.JFrame implements View {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(355, 355, 355))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(8, 8, 8)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnAdd)
@@ -166,8 +160,8 @@ public class SubMenuPaketWisata extends javax.swing.JFrame implements View {
         return btnDelete;
     }
 
-    public void setTbPaketWisata(JTable tbPaketWisata) {
-        this.tbPaketWisata = tbPaketWisata;
+    public Object getTbPaketWisata() {
+        return tbPaketWisata;
     }
 
     public void setKeterangan(String keterangan) {
@@ -179,5 +173,28 @@ public class SubMenuPaketWisata extends javax.swing.JFrame implements View {
         btnBack.addActionListener(er);
         btnDelete.addActionListener(er);
         btnAdd.addActionListener(er);
-    } 
+    }
+    
+    public void addAdapter(MouseAdapter ma) {
+        tbPaketWisata.addMouseListener(ma);
+    }
+    
+    public int getSelectedPaketWisata() {
+        if (tbPaketWisata.getSelectedRow() == -1) {
+            throw new IllegalStateException("Tidak ada data yang dipilih");
+        }
+        return tbPaketWisata.getSelectedRow();
+    }
+    
+    public void viewAll(ArrayList<PaketWisata> listPaketWisata) {
+        String[] title = {"ID", "Nama Paket", "Harga"};
+        String [] [] data = new String[listPaketWisata.size()][3];
+        for(int i = 0; i < listPaketWisata.size(); i++) {
+            PaketWisata p = listPaketWisata.get(i);
+            data[i][0] = String.valueOf(p.getIdPaket());
+            data[i][1] = p.getNamaPaket();
+            data[i][2] = String.valueOf(p.getHargaPaket());
+        }
+        tbPaketWisata.setModel(new DefaultTableModel(data, title));
+    }
 }

@@ -47,6 +47,14 @@ public class PaketWisata {
         return hargaPaket;
     }
 
+    public TempatWisata[] getDaftarTujuanWisata() {
+        return daftarTujuanWisata;
+    }
+
+    public int getnTempatWisata() {
+        return nTempatWisata;
+    }
+
     @Override
     public String toString() {
         String daftarTujuanWisataString = " ";

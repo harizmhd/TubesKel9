@@ -818,6 +818,26 @@ public class Aplikasi {
         return delete;
     }
     
+    public boolean deleteTempatWisata(TempatWisata x) {      
+        boolean delete = listTempatWisata.remove(x);
+        return delete;
+    }
+    
+    public boolean deletePaketWisata(PaketWisata x) {
+        boolean delete = listPaketWisata.remove(x);        
+        return delete;
+    }
+    
+    public boolean deletePelanggan(Pelanggan x) {
+        boolean delete = listPelanggan.remove(x);
+        return delete;
+    }
+    
+    public boolean deletePerjalanan(Perjalanan x) {
+        boolean delete = listPerjalanan.remove(x);
+        return delete;
+    }
+    
     /* mencari Petugas dengan idPegawai x di dalam listPetugas
        return object jika ditemukan dan return null jika tidak ditemukan */
     public Petugas searchPetugas(long x) {
@@ -1017,5 +1037,25 @@ public class Aplikasi {
                 break;
         }
         return id;
+    }
+
+    public ArrayList<Petugas> getListPetugas() {
+        return listPetugas;
+    }
+
+    public ArrayList<TempatWisata> getListTempatWisata() {
+        return listTempatWisata;
+    }
+
+    public ArrayList<PaketWisata> getListPaketWisata() {
+        return listPaketWisata;
+    }
+
+    public ArrayList<Pelanggan> getListPelanggan() {
+        return listPelanggan;
+    }
+
+    public ArrayList<Perjalanan> getListPerjalanan() {
+        return listPerjalanan;
     }
 }

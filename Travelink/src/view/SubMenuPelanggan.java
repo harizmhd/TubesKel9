@@ -6,7 +6,10 @@
 package view;
 
 import java.awt.event.ActionListener;
-import javax.swing.JTable;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import model.Pelanggan;
 
 /**
  *
@@ -60,16 +63,9 @@ public class SubMenuPelanggan extends javax.swing.JFrame implements View{
                 "ID", "Nama", "No KTP", "Jenis Kelamin", "Alamat", "E-mail", "No Telp"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -94,36 +90,32 @@ public class SubMenuPelanggan extends javax.swing.JFrame implements View{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addContainerGap(384, Short.MAX_VALUE))
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnAdd)
@@ -149,21 +141,48 @@ public class SubMenuPelanggan extends javax.swing.JFrame implements View{
     }
 
     public Object getBtnBack() {
-        return btnDelete;
+        return btnBack;
     }
 
     public Object getBtnDelete() {
         return btnDelete;
     }
 
-    public void setTbPelanggan(JTable tbPaketWisata) {
-        this.tbPelanggan = tbPaketWisata;
+    public Object getTbPelanggan() {
+        return tbPelanggan;
     }
     
     @Override
     public void addListener(ActionListener er) {
         btnDelete.addActionListener(er);
-        btnDelete.addActionListener(er);
+        btnBack.addActionListener(er);
         btnAdd.addActionListener(er);
-    } 
+    }
+    
+    public void addAdapter(MouseAdapter ma) {
+        tbPelanggan.addMouseListener(ma);
+    }
+    
+    public int getSelectedPelanggan() {
+        if (tbPelanggan.getSelectedRow() == -1) {
+            throw new IllegalStateException("Tidak ada data yang dipilih");
+        }
+        return tbPelanggan.getSelectedRow();
+    }
+    
+    public void viewAll(ArrayList<Pelanggan> listPelanggan) {
+        String[] title = {"ID", "Nama", "No KTP", "Jenis Kelamin", "Alamat", "E-mail", "No Telp"};
+        String [] [] data = new String[listPelanggan.size()][7];
+        for(int i = 0; i < listPelanggan.size(); i++) {
+            Pelanggan p = listPelanggan.get(i);
+            data[i][0] = String.valueOf(p.getIdPelanggan());
+            data[i][1] = p.getNama();
+            data[i][2] = String.valueOf(p.getNoKtp());
+            data[i][3] = String.valueOf(p.getJenisKelamin());
+            data[i][4] = p.getAlamat();
+            data[i][5] = p.getEmail();
+            data[i][6] = String.valueOf(p.getNoTelp());
+        }
+        tbPelanggan.setModel(new DefaultTableModel(data, title));
+    }
 }

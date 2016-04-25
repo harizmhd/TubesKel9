@@ -2,15 +2,18 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.*;
 import view.*;
 
-public class Controller implements ActionListener, ListSelectionListener {
+public class Controller extends MouseAdapter implements ActionListener, ListSelectionListener {
     private Aplikasi model;
     private View view;
+    private int selected;
     
     public Controller() {
         model = new Aplikasi();
@@ -78,28 +81,40 @@ public class Controller implements ActionListener, ListSelectionListener {
         SubMenuTempatWisata subTemWisata = new SubMenuTempatWisata();
         subTemWisata.setVisible(true);
         subTemWisata.addListener(this);
+        subTemWisata.addAdapter(this);
+        subTemWisata.viewAll(model.getListTempatWisata());
         view = subTemWisata;
+        selected = -1;
     }
     
     public void goToSubMenuPaketWisata() {
         SubMenuPaketWisata subPakWisata = new SubMenuPaketWisata();
         subPakWisata.setVisible(true);
         subPakWisata.addListener(this);
+        subPakWisata.addAdapter(this);
+        subPakWisata.viewAll(model.getListPaketWisata());
         view = subPakWisata;
+        selected = -1;
     }
     
     public void goToSubMenuPelanggan() {
         SubMenuPelanggan subPelanggan = new SubMenuPelanggan();
         subPelanggan.setVisible(true);
         subPelanggan.addListener(this);
+        subPelanggan.addAdapter(this);
+        subPelanggan.viewAll(model.getListPelanggan());
         view = subPelanggan;
+        selected = -1;
     }
     
     public void goToSubMenuPerjalanan() {
-        SubMenuTempatWisata subTemWisata = new SubMenuTempatWisata();
-        subTemWisata.setVisible(true);
-        subTemWisata.addListener(this);
-        view = subTemWisata;
+        SubMenuPerjalanan subPerjalanan = new SubMenuPerjalanan();
+        subPerjalanan.setVisible(true);
+        subPerjalanan.addListener(this);
+        subPerjalanan.addAdapter(this);
+        subPerjalanan.viewAll(model.getListPerjalanan());
+        view = subPerjalanan;
+        selected = -1;
     }
     
     public void goToDeleteTempatWisata() {
@@ -173,8 +188,24 @@ public class Controller implements ActionListener, ListSelectionListener {
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                goToDeleteTempatWisata();
-                submenu.dispose();
+                if (selected == -1) {
+                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin"
+                    + "dihapus.");
+                } else {
+                    TempatWisata x = model.getListTempatWisata().get(selected);
+                    int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
+                        + x.getNamaTempat() + "?");
+                    if (pilihan == 1) {
+                        boolean isDeleted = model.deleteTempatWisata(x);
+                        if (isDeleted) {
+                            JOptionPane.showMessageDialog(null, "Tempat wisata "
+                                    + "berhasil dihapus.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Tempat wisata "
+                                    + "gagal dihapus.");
+                        }
+                    }
+                }
             }
         } else if (view instanceof SubMenuPaketWisata) {
             SubMenuPaketWisata submenu = (SubMenuPaketWisata) view;
@@ -185,8 +216,24 @@ public class Controller implements ActionListener, ListSelectionListener {
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                goToDeletePaketWisata();
-                submenu.dispose();
+                if (selected == -1) {
+                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin"
+                    + "dihapus.");
+                } else {
+                    PaketWisata x = model.getListPaketWisata().get(selected);
+                    int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
+                        + x.getNamaPaket() + "?");
+                    if (pilihan == 1) {
+                        boolean isDeleted = model.deletePaketWisata(x);
+                        if (isDeleted) {
+                            JOptionPane.showMessageDialog(null, "Paket wisata "
+                                    + "berhasil dihapus.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Paket wisata "
+                                    + "gagal dihapus.");
+                        }
+                    }
+                }
             }
         } else if (view instanceof SubMenuPelanggan) {
             SubMenuPelanggan submenu = (SubMenuPelanggan) view;
@@ -197,8 +244,24 @@ public class Controller implements ActionListener, ListSelectionListener {
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                goToDeletePelanggan();
-                submenu.dispose();
+                try {
+                    selected = submenu.getSelectedPelanggan();
+                    Pelanggan x = model.getListPelanggan().get(selected);
+                    int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
+                            + x.getNama() + "?");
+                    if (pilihan == 1) {
+                        boolean isDeleted = model.deletePelanggan(x);
+                        if (isDeleted) {
+                            JOptionPane.showMessageDialog(null, "Data pelanggan"
+                                    + " berhasil dihapus.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Data pelanggan"
+                                    + " gagal dihapus.");
+                        }
+                    }
+                } catch (IllegalStateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
             }
         } else if (view instanceof SubMenuPerjalanan) {
             SubMenuPerjalanan submenu = (SubMenuPerjalanan) view;
@@ -209,8 +272,23 @@ public class Controller implements ActionListener, ListSelectionListener {
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                goToDeletePerjalanan();
-                submenu.dispose();
+                if (selected == -1) {
+                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin"
+                    + " dihapus.");
+                } else {
+                    Perjalanan x = model.getListPerjalanan().get(selected);
+                    int pilihan = JOptionPane.showConfirmDialog(null, "Hapus?");
+                    if (pilihan == 1) {
+                        boolean isDeleted = model.deletePerjalanan(x);
+                        if (isDeleted) {
+                            JOptionPane.showMessageDialog(null, "Data perjalanan"
+                                    + " berhasil dihapus.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Data perjalanan"
+                                    + " gagal dihapus.");
+                        }
+                    }
+                }
             }
         } else if (view instanceof RegistrasiPetugas) {
             RegistrasiPetugas registrasi = (RegistrasiPetugas) view;
@@ -226,7 +304,21 @@ public class Controller implements ActionListener, ListSelectionListener {
                 goToSubMenuTempatWisata();
                 registrasi.dispose();
             } else if (source.equals(registrasi.getBtnSimpan())) {
-                
+                try {
+                    long idTempat = model.incrementId(2);
+                    String namaTempat = registrasi.getNamaTempat();
+                    String deskripsiTempat = registrasi.getDeskripsi();
+                    model.createTempatWisata(idTempat, namaTempat, deskripsiTempat);
+                } catch (java.util.InputMismatchException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), 
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } catch (RuntimeException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    registrasi.dispose();
+                    goToSubMenuTempatWisata();
+                }
             }
         } else if (view instanceof RegistrasiPaketWisata) {
             RegistrasiPaketWisata registrasi = (RegistrasiPaketWisata) view;
@@ -246,7 +338,25 @@ public class Controller implements ActionListener, ListSelectionListener {
                 goToSubMenuPelanggan();
                 registrasi.dispose();
             } else if (source.equals(registrasi.getBtnSubmit())) {
-                
+                try {
+                    long idPelanggan = model.incrementId(4);
+                    String nama = registrasi.getNama();
+                    long noKtp = registrasi.getNoKtp();
+                    char jenisKelamin = registrasi.getJenisKelamin();
+                    String alamat = registrasi.getAlamat();
+                    String email = registrasi.getEmail();
+                    long noTelp = registrasi.getNoTelp();
+                    model.createPelanggan(idPelanggan, nama, noKtp, jenisKelamin, alamat, email, noTelp);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), 
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } catch (RuntimeException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    registrasi.dispose();
+                    goToSubMenuPelanggan();
+                }
             }
         } else if (view instanceof RegistrasiPerjalanan) {
             RegistrasiPerjalanan registrasi = (RegistrasiPerjalanan) view;
@@ -302,5 +412,40 @@ public class Controller implements ActionListener, ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         
+    }
+    
+    public void MouseClicked(MouseEvent e) {
+        Object source = e.getSource();
+        if (view instanceof SubMenuPaketWisata) {
+            SubMenuPaketWisata x = (SubMenuPaketWisata) view;
+            if (source.equals(x.getTbPaketWisata())) {
+                selected = x.getSelectedPaketWisata();
+                PaketWisata pw = model.getListPaketWisata().get(selected);
+                String keterangan = "Tujuan Wisata yang terdaftar: \n";
+                for (int i = 0; i < pw.getnTempatWisata(); i++) {
+                    if (i == 0) {
+                        keterangan += pw.getDaftarTujuanWisata()[i].getNamaTempat();
+                    } else {
+                        keterangan += ", " + pw.getDaftarTujuanWisata()[i].getNamaTempat();
+                    }
+                }
+                x.setKeterangan(keterangan);
+            }
+        } else if (view instanceof SubMenuPerjalanan) {
+            SubMenuPerjalanan y = (SubMenuPerjalanan) view;
+            if (source.equals(y.getTbPerjalanan())) {
+                selected = y.getSelectedPerjalanan();
+                Perjalanan pj = model.getListPerjalanan().get(selected);
+                String keterangan = "Pelanggan yang terdaftar: \n";
+                for (int i = 0; i < pj.getnPelanggan(); i++) {
+                    if (i == 0) {
+                        keterangan += pj.getPelanggan()[i].getNama();
+                    } else {
+                        keterangan += ", " + pj.getPelanggan()[i].getNama();
+                    }
+                }
+                y.setKeterangan(keterangan);
+            }
+        }
     }
 }
