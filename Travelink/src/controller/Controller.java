@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -52,7 +53,7 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
         RegistrasiPaketWisata regPakWisata = new RegistrasiPaketWisata();
         regPakWisata.setVisible(true);
         regPakWisata.addListener(this);
-        regPakWisata.addListSelectionListener(this);
+        regPakWisata.setTbTempatWisata(model.getListTempatWisata());
         view = regPakWisata;
     }
     
@@ -67,14 +68,9 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
         RegistrasiPerjalanan regPerjalanan = new RegistrasiPerjalanan();
         regPerjalanan.setVisible(true);
         regPerjalanan.addListener(this);
+        regPerjalanan.setCbPaketWisata(model.getListPaketWisata());
+        regPerjalanan.setTbPelanggan(model.getListPelanggan());
         view = regPerjalanan;
-    }
-    
-    public void goToRegistrasiPerjalananNext() {
-        RegistrasiPerjalananNext regPerjalananNxt = new RegistrasiPerjalananNext();
-        regPerjalananNxt.setVisible(true);
-        regPerjalananNxt.addListener(this);
-        view = regPerjalananNxt;
     }
     
     public void goToSubMenuTempatWisata() {
@@ -149,17 +145,27 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
         if (view instanceof LoginPetugas) {
-            LoginPetugas login = (LoginPetugas) view;
-            if (source.equals(login.getBtnExit())) {
+            LoginPetugas log = (LoginPetugas) view;
+            if (source.equals(log.getBtnExit())) {
                 JOptionPane.showMessageDialog(null, "Thank You");
                 System.exit(0);
-            } else if (source.equals(login.getBtnSignIn())) {
-                //temporary
-                goToMainMenu();
-                login.dispose();
-            } else if (source.equals(login.getBtnSignUp())) {
+            } else if (source.equals(log.getBtnSignIn())) {
+                try{
+                    String username = log.getTextUsername();
+                    String password = log.getTextPassword();
+                    boolean hakAkses = model.login(username, password);
+                    if (!hakAkses) {
+                        JOptionPane.showMessageDialog(null, "Username atau Passowrd yang dimasukkan salah");
+                    } else {
+                        goToMainMenu();
+                        log.dispose();
+                    }
+                } catch (Exception e){
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+            } else if (source.equals(log.getBtnSignUp())) {
                 goToRegistrasiPetugas();
-                login.dispose();
+                log.dispose();
             }
         } else if (view instanceof MainMenu) {
             MainMenu menu = (MainMenu) view;
@@ -188,23 +194,26 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                if (selected == -1) {
-                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin"
-                    + "dihapus.");
-                } else {
+                try {
+                    selected = submenu.getSelectedTempatWisata();
                     TempatWisata x = model.getListTempatWisata().get(selected);
                     int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
-                        + x.getNamaTempat() + "?");
-                    if (pilihan == 1) {
+                            + x.getNamaTempat() + "?");
+                    if (pilihan == JOptionPane.YES_OPTION) {
                         boolean isDeleted = model.deleteTempatWisata(x);
                         if (isDeleted) {
-                            JOptionPane.showMessageDialog(null, "Tempat wisata "
-                                    + "berhasil dihapus.");
+                            JOptionPane.showMessageDialog(null, "Tempat Wisata"
+                                    + " berhasil dihapus.");
                         } else {
-                            JOptionPane.showMessageDialog(null, "Tempat wisata "
-                                    + "gagal dihapus.");
+                            JOptionPane.showMessageDialog(null, "Tempat Wisata"
+                                    + " gagal dihapus.");
                         }
                     }
+                } catch (IllegalStateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                } finally {
+                    submenu.dispose();
+                    goToSubMenuTempatWisata();
                 }
             }
         } else if (view instanceof SubMenuPaketWisata) {
@@ -249,7 +258,7 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                     Pelanggan x = model.getListPelanggan().get(selected);
                     int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
                             + x.getNama() + "?");
-                    if (pilihan == 1) {
+                    if (pilihan == JOptionPane.YES_OPTION) {
                         boolean isDeleted = model.deletePelanggan(x);
                         if (isDeleted) {
                             JOptionPane.showMessageDialog(null, "Data pelanggan"
@@ -261,6 +270,9 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                     }
                 } catch (IllegalStateException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
+                } finally {
+                    submenu.dispose();
+                    goToSubMenuPelanggan();
                 }
             }
         } else if (view instanceof SubMenuPerjalanan) {
@@ -272,13 +284,12 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                if (selected == -1) {
-                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin"
-                    + " dihapus.");
-                } else {
+                try {
+                    selected = submenu.getSelectedPerjalanan();
                     Perjalanan x = model.getListPerjalanan().get(selected);
-                    int pilihan = JOptionPane.showConfirmDialog(null, "Hapus?");
-                    if (pilihan == 1) {
+                    int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
+                            + "data pejalanan?");
+                    if (pilihan == JOptionPane.YES_OPTION) {
                         boolean isDeleted = model.deletePerjalanan(x);
                         if (isDeleted) {
                             JOptionPane.showMessageDialog(null, "Data perjalanan"
@@ -288,6 +299,11 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                                     + " gagal dihapus.");
                         }
                     }
+                } catch (IllegalStateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                } finally {
+                    submenu.dispose();
+                    goToSubMenuPerjalanan();
                 }
             }
         } else if (view instanceof RegistrasiPetugas) {
@@ -296,7 +312,27 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToLogin();
                 registrasi.dispose();
             } else if (source.equals(registrasi.getBtnSubmit())) {
-                
+                try{
+                    String username = registrasi.getTxUsername();
+                    String password = registrasi.getTxPassword();
+                    long idPegawai = model.incrementId(1);
+                    String nama = registrasi.getNama();
+                    long noKtp = registrasi.getNoKtp();
+                    char jenisKelamin = registrasi.getJenisKelamin();
+                    String alamat = registrasi.getAlamat();
+                    String email = registrasi.getEmail();
+                    long noTelp = registrasi.getNoTelp();
+                    model.createPetugas(idPegawai, username, password, nama, noKtp, jenisKelamin, alamat, email, noTelp);
+                } catch (NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage(),
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } catch (RuntimeException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage(),
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } finally{
+                    registrasi.dispose();
+                    goToLogin();
+                }
             }
         } else if (view instanceof RegistrasiTempatWisata) {
             RegistrasiTempatWisata registrasi = (RegistrasiTempatWisata) view;
@@ -326,11 +362,38 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToSubMenuPaketWisata();
                 registrasi.dispose();
             } else if (source.equals(registrasi.getBtnSubmit())) {
-                
-            } else if (source.equals(registrasi.getBtnAdd())) {
-                
-            } else if (source.equals(registrasi.getBtnRemove())) {
-                
+                try {
+                    long idPaket = model.incrementId(3);
+                    String namaPaket = registrasi.getNamaPaket();
+                    long hargaPaket = registrasi.getHarga();
+                    boolean[] listSelected = registrasi.getListSelected();
+                    ArrayList<TempatWisata> listTempatWisata = new ArrayList<>();
+                    for (int i=0; i<listSelected.length; i++) {
+                        if (listSelected[i] == true) {
+                            listTempatWisata.add(model.getListTempatWisata().get(i));
+                        }
+                    }
+                    if (listTempatWisata.isEmpty()) {
+                        throw new IllegalStateException("Pilih minimal satu pelanggan");
+                    }
+                    TempatWisata[] dtw = new TempatWisata[listTempatWisata.size()];
+                    for (int i=0; i<dtw.length; i++) {
+                        dtw[i] = listTempatWisata.get(i);
+                    }                    
+                    model.createPaketWisata(idPaket, namaPaket, hargaPaket, (TempatWisata[])dtw);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), 
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalStateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), 
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } catch (RuntimeException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    registrasi.dispose();
+                    goToSubMenuPaketWisata();
+                }
             }
         } else if (view instanceof RegistrasiPelanggan) {
             RegistrasiPelanggan registrasi = (RegistrasiPelanggan) view;
@@ -364,15 +427,32 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToSubMenuPerjalanan();
                 registrasi.dispose();
             } else if (source.equals(registrasi.getBtnSubmit())) {
-                
-            }
-        } else if (view instanceof RegistrasiPerjalananNext) {
-            RegistrasiPerjalananNext registrasi = (RegistrasiPerjalananNext) view;
-            if (source.equals(registrasi.getBtnBack())) {
-                goToRegistrasiPerjalanan();
-                registrasi.dispose();
-            } else if (source.equals(registrasi.getBtnSubmit())) {
-                
+                try {
+                    long idPerjalanan = model.incrementId(5);
+                    selected = registrasi.getSelectedPaketWisata();
+                    PaketWisata paket = model.getListPaketWisata().get(selected);
+                    boolean listSelected[] = registrasi.getListSelected();
+                    ArrayList<Pelanggan> listPelanggan = new ArrayList<>();
+                    for (int i=0; i<listSelected.length; i++) {
+                        if (listSelected[i] == true) {
+                            listPelanggan.add(model.getListPelanggan().get(i));
+                        }
+                    }
+                    if (listPelanggan.isEmpty()) {
+                        throw new IllegalStateException("Pilih minimal satu pelanggan");
+                    }
+                    Pelanggan[] dpg = new Pelanggan[listPelanggan.size()];
+                    for (int i=0; i<dpg.length; i++) {
+                        dpg[i] = listPelanggan.get(i);
+                    }  
+                    model.createPerjalanan(idPerjalanan, paket, (Pelanggan[])dpg);
+                } catch (IllegalStateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), 
+                            "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    registrasi.dispose();
+                    goToSubMenuPerjalanan();
+                }
             }
         } else if (view instanceof DeleteTempatWisata) {
             DeleteTempatWisata delete = (DeleteTempatWisata) view;
