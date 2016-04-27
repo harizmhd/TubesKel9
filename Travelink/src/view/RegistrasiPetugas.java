@@ -6,7 +6,6 @@
 package view;
 
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import javax.swing.ButtonGroup;
 
 /**
@@ -20,6 +19,7 @@ public class RegistrasiPetugas extends javax.swing.JFrame implements View {
      */
     public RegistrasiPetugas() {
         initComponents();
+        groupButton();
     }
 
     /**
@@ -235,14 +235,15 @@ public class RegistrasiPetugas extends javax.swing.JFrame implements View {
     private javax.swing.JTextField txUsername;
     // End of variables declaration//GEN-END:variables
 
-    String password;
-    String username;
-
-    public String getTxPassword() {
+    public String getPassword1() {
         return txPassword1.getText();
     }
+    
+    public String getPassword2() {
+        return txPassword2.getText();
+    }
 
-    public String getTxUsername() {
+    public String getUsername() {
         return txUsername.getText();
     }
     
@@ -302,13 +303,6 @@ public class RegistrasiPetugas extends javax.swing.JFrame implements View {
         btnLaki.addActionListener(e);
         btnPerempuan.addActionListener(e);
         btnSubmit.addActionListener(e);
-    }
-    
-    public void addKeyPressed(KeyListener e){
-        btnBack.addKeyListener(e);
-        btnLaki.addKeyListener(e);
-        btnPerempuan.addKeyListener(e);
-        btnSubmit.addKeyListener(e);
     }
 }
 

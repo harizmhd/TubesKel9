@@ -6,12 +6,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import model.*;
 import view.*;
 
-public class Controller extends MouseAdapter implements ActionListener, ListSelectionListener {
+public class Controller extends MouseAdapter implements ActionListener {
     private Aplikasi model;
     private View view;
     private int selected;
@@ -182,8 +180,11 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToSubMenuPerjalanan();
                 menu.dispose();
             } else if (source.equals(menu.getBtnSignOut())) {
-                JOptionPane.showMessageDialog(null, "Thank You");
-                System.exit(0);
+                int pilihan = JOptionPane.showConfirmDialog(null, "Keluar?");
+                if (pilihan == JOptionPane.YES_OPTION) {
+                    goToLogin();
+                    menu.dispose();
+                }
             }
         } else if (view instanceof SubMenuTempatWisata) {
             SubMenuTempatWisata submenu = (SubMenuTempatWisata) view;
@@ -225,23 +226,26 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 goToMainMenu();
                 submenu.dispose();
             } else if (source.equals(submenu.getBtnDelete())) {
-                if (selected == -1) {
-                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin"
-                    + "dihapus.");
-                } else {
+                try {
+                    selected = submenu.getSelectedPaketWisata();
                     PaketWisata x = model.getListPaketWisata().get(selected);
                     int pilihan = JOptionPane.showConfirmDialog(null, "Hapus "
-                        + x.getNamaPaket() + "?");
-                    if (pilihan == 1) {
+                            + x.getNamaPaket() + "?");
+                    if (pilihan == JOptionPane.YES_OPTION) {
                         boolean isDeleted = model.deletePaketWisata(x);
                         if (isDeleted) {
-                            JOptionPane.showMessageDialog(null, "Paket wisata "
-                                    + "berhasil dihapus.");
+                            JOptionPane.showMessageDialog(null, "Tempat Wisata"
+                                    + " berhasil dihapus.");
                         } else {
-                            JOptionPane.showMessageDialog(null, "Paket wisata "
-                                    + "gagal dihapus.");
+                            JOptionPane.showMessageDialog(null, "Tempat Wisata"
+                                    + " gagal dihapus.");
                         }
                     }
+                } catch (IllegalStateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                } finally {
+                    submenu.dispose();
+                    goToSubMenuPaketWisata();
                 }
             }
         } else if (view instanceof SubMenuPelanggan) {
@@ -313,8 +317,11 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 registrasi.dispose();
             } else if (source.equals(registrasi.getBtnSubmit())) {
                 try{
-                    String username = registrasi.getTxUsername();
-                    String password = registrasi.getTxPassword();
+                    String username = registrasi.getUsername();
+                    String password1 = registrasi.getPassword1();
+                    String password2 = registrasi.getPassword2();
+                    if (!password1.equals(password2))
+                            throw new RuntimeException("Password yang dimasukkan tidak sama");
                     long idPegawai = model.incrementId(1);
                     String nama = registrasi.getNama();
                     long noKtp = registrasi.getNoKtp();
@@ -322,7 +329,7 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                     String alamat = registrasi.getAlamat();
                     String email = registrasi.getEmail();
                     long noTelp = registrasi.getNoTelp();
-                    model.createPetugas(idPegawai, username, password, nama, noKtp, jenisKelamin, alamat, email, noTelp);
+                    model.createPetugas(idPegawai, username, password1, nama, noKtp, jenisKelamin, alamat, email, noTelp);
                 } catch (NumberFormatException e){
                     JOptionPane.showMessageDialog(null, e.getMessage(),
                             "Tidak dapat menyimpan data", JOptionPane.ERROR_MESSAGE);
@@ -487,11 +494,6 @@ public class Controller extends MouseAdapter implements ActionListener, ListSele
                 
             }
         }
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        
     }
     
     public void MouseClicked(MouseEvent e) {
